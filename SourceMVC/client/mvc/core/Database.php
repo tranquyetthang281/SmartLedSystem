@@ -2,7 +2,7 @@
 class Database
 {
     public $conn;
-    protected $hostname = "";
+    protected $hostname = "localhost";
     protected $username = "";
     protected $password = "";
     protected $dbname = "";
