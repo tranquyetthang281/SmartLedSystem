@@ -1,0 +1,58 @@
+.phone-screen {
+    background-image: url("pngwing.com.png");
+    background-size: cover;
+    width: 325px;
+    height: 600px;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.login {
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.web-app {
+    position: absolute;
+    font-size: 40px;
+    font-weight: 600;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Roboto", sans-serif;
+}
+.login-input {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+}
+.login-char {
+    position: absolute;
+    top: 38%;
+    font-size: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #0d6efd;
+}
+.login-title {
+    font-size: 70px;
+    color: #0d6efd;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%);
+}
+.username,
+.password {
+    margin-bottom: 10px;
+    width: 200px;
+    height: 40px;
+}
+.login-button {
+    width: 200px;
+}
