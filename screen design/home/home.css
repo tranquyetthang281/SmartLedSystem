@@ -16,7 +16,6 @@
     left: 50%;
     top: 40px;
     transform: translateX(-50%);
-    border: 1px solid red;
 }
 .footer {
     position: absolute;
@@ -49,4 +48,61 @@
     color: black;
     transition: 0.2s linear;
     background-color: #ff9422;
+}
+.home-title {
+    position: absolute;
+    font-size: 40px;
+    font-weight: 600;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Roboto", sans-serif;
+    top: 20px;
+}
+.home-leds {
+    position: absolute;
+    top: 120px;
+}
+.home-led-item {
+    margin-bottom: 20px;
+    list-style-type: none;
+    display: flex;
+    font-size: 18px;
+    margin-left: 20px;
+}
+/* .led-color {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 3px solid black;
+    margin-right: 10px;
+    margin-top: 2px;
+    background-color: #fd3957;
+} */
+
+.on-off-button {
+    width: 50px;
+    height: 25px;
+    border: 2px solid black;
+    margin-left: 20px;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    background-color: #1d1d1d;
+    transition: 0.1s linear;
+}
+
+.circle-on-off {
+    width: 18px;
+    height: 18px;
+    border: 1px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+    background-color: white;
+    transition: 0.05s ease-in-out;
+}
+.check-on-off {
+    background-color: white;
 }
