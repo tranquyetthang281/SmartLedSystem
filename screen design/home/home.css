@@ -17,6 +17,7 @@
     top: 40px;
     transform: translateX(-50%);
 }
+
 .footer {
     position: absolute;
     width: 305px;
@@ -50,7 +51,7 @@
     background-color: #ff9422;
 }
 .home-title {
-    position: absolute;
+    position: fixed;
     font-size: 40px;
     font-weight: 600;
     left: 50%;
@@ -60,14 +61,38 @@
 }
 .home-leds {
     position: absolute;
-    top: 120px;
+    top: 100px;
+    height: 330px;
+    overflow: scroll;
+    width: 295px;
+    padding: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.home-leds::-webkit-scrollbar {
+    display: none;
 }
 .home-led-item {
+    padding: 7px;
+    margin: 0px 20px;
     margin-bottom: 20px;
     list-style-type: none;
-    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
-    margin-left: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 7px -1px rgb(51 51 51 / 23%);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98), box-shadow 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+    /*  */
+    background-color: rgb(255, 93, 93);
+}
+.home-led-item:first-child {
+    margin-top: 10px;
+}
+.home-led-item:hover {
+    transform: scale(1.15);
+    box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
 }
 /* .led-color {
     width: 25px;
@@ -78,12 +103,15 @@
     margin-top: 2px;
     background-color: #fd3957;
 } */
-
+.home-led-item p {
+    margin: 7px 0px;
+    margin-left: 20px;
+}
 .on-off-button {
     width: 50px;
     height: 25px;
     border: 2px solid black;
-    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 20px;
     position: relative;
     cursor: pointer;
