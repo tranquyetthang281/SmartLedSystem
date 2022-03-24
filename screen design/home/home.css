@@ -16,6 +16,7 @@
     left: 50%;
     top: 40px;
     transform: translateX(-50%);
+    border: 1px solid red;
 }
 .footer {
     position: absolute;
@@ -44,26 +45,8 @@
     position: relative;
     overflow: hidden;
 }
-/* .icon-footer::before {
-    content: "";
-    font-size: 40px;
-    width: 75px;
-    height: 75px;
-    border-radius: 50px;
-    position: absolute;
-    left: -50px;
-    bottom: -75px;
-    background-color: #fdac53;
-    transition: 0.2s linear;
-    z-index: -1;
-} */
 .icon-footer:hover {
     color: black;
     transition: 0.2s linear;
     background-color: #ff9422;
 }
-/* .icon-footer:hover::before {
-    bottom: -11px;
-    left: -11px;
-    transition: 0.2s linear;
-} */
