@@ -1,3 +1,6 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
 .phone-screen {
     background-image: url('pngwing.com.png');
     background-size: cover;
@@ -50,13 +53,15 @@
     transition: 0.2s linear;
     background-color: #ff9422;
 }
+.icon-footer a {
+    color: white;
+}
 .home-title {
     position: fixed;
     font-size: 40px;
     font-weight: 600;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Roboto', sans-serif;
     top: 20px;
 }
 .home-leds {
@@ -137,7 +142,7 @@
     margin-left: 20px;
     outline: none;
 }
-.custom-btn {
+.mode-btn {
     width: 130px;
     height: 40px;
     padding: 10px 25px;

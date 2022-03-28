@@ -1,4 +1,5 @@
-<?php
+<!-- 
+
 /*
 Library to send and retrieve data to/from the AdaFruit IO platform.
 Copyright (C) 2016  Nicolas Simonnet
@@ -155,4 +156,4 @@ class AdaFruitIOFeed
 
 $a = new AdaFruitIO("aio_kPra71MFdFmA7PiFtjFq8Mv0r46T");
 $str = $a->getFeedNames();
-$b = $a->getFeed("CPP_LED0");
+$b = $a->getFeed("CPP_LED0"); -->

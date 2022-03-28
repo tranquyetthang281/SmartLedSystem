@@ -2,7 +2,7 @@
 
 class Home extends Controller
 {
-    public $data = 0;
+    public $data = array();
 
     public function __construct()
     {
@@ -10,9 +10,13 @@ class Home extends Controller
 
     function Show()
     {
-        $this->view("HomePage", $this->data);
+        $this->view("Main", $this->data);
     }
-
+    function RenderPage($render)
+    {
+        $this->data['render'] = $render;
+        $this->view("Main", $this->data);
+    }
     function turnOnLed()
     {
         $cmd = 'python -u main.py';
