@@ -151,8 +151,4 @@ class AdaFruitIOFeed
         return $res;
     }
 }
-
-
-$a = new AdaFruitIO("aio_kPra71MFdFmA7PiFtjFq8Mv0r46T");
-$str = $a->getFeedNames();
-$b = $a->getFeed("CPP_LED0");
+?>

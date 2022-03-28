@@ -20,17 +20,41 @@
         <div class="phone-screen">
             <input type="checkbox" id="test-check" onclick="turnOnLed()">
             <script>
+                var DOMAIN = "http://localhost/smartledsystem/SourceMVC/client";
+                
+                function sleep(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms));
+                }
+
+                async function loop()
+                {
+                    while (true) {
+                        $.ajax({
+                            url: DOMAIN + "/Home/testGetData",
+                            type: "post",
+                            data: {
+                                flag: true,
+                            },
+                            success: function(result) {
+                                console.log(result);
+                            },
+                        });
+                        await sleep(1000);
+                    }
+                }
+
                 function turnOnLed() {
-                    $.ajax({
-                        url: DOMAIN + "/Home/turnOnLed",
-                        type: "post",
-                        data: {
-                            flag: True,
-                        },
-                        success: function(result) {
-                            console.log(result);
-                        },
-                    });
+                    // $.ajax({
+                    //     url: DOMAIN + "/Home/turnOnLed",
+                    //     type: "post",
+                    //     data: {
+                    //         flag: true,
+                    //     },
+                    //     success: function(result) {
+                    //         console.log(result);
+                    //     },
+                    // });
+                    loop();
                 }
             </script>
             <div class="body">
@@ -77,6 +101,7 @@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="./home.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </body>
 
 </html>

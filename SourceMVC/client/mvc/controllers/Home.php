@@ -2,10 +2,13 @@
 
 class Home extends Controller
 {
-    public $data = 0;
+    public $data;
+    public $adafruitIO;
 
     public function __construct()
     {
+        $this->data = 0;
+        $this->adafruitIO = new AdaFruitIO("aio_LzKZ65Cn46pYdjXQ6b3Nkgw1oL3t");
     }
 
     function Show()
@@ -15,14 +18,18 @@ class Home extends Controller
 
     function turnOnLed()
     {
-        $cmd = 'python -u main.py';
-        while (@ob_end_flush());
-        $proc = popen($cmd, 'r');
-        while (!feof($proc)) {
-            echo fread($proc, 4096);
-            @flush();
+        $led0 = $this->adafruitIO->getFeed("CPP_LED0");
+        if (isset($_POST["flag"])) {
+            if ($_POST["flag"]) {
+                $led0->send("1");
+            }
         }
-        pclose($proc);
         return "success";
+    }
+
+    function testGetData()
+    {
+        $led0 = $this->adafruitIO->getFeed("CPP_LED0");
+        echo $led0->get();
     }
 }
