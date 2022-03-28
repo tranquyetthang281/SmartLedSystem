@@ -9,5 +9,3 @@ require_once "./mvc/core/Database.php";
 require_once "./mvc/core/Session.php";
 
 require_once "./mvc/core/Role.php";
-
-require_once "./mvc/core/AdafruitIO.php";

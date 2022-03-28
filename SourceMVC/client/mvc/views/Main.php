@@ -69,6 +69,7 @@ $DOMAIN = 'http://localhost/SmartLedSystem/SourceMVC/client/';
     <script src="<?php echo $DOMAIN ?>public/js/home.js"></script>
     <script src="<?php echo $DOMAIN ?>public/js/history.js"></script>
     <script src="<?php echo $DOMAIN ?>public/js/statistics.js"></script>
+    <script src="<?php echo $DOMAIN ?>public/js/main.js"></script>
 </body>
 
 </html>
