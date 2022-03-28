@@ -8,7 +8,7 @@ class Home extends Controller
 
     public function __construct()
     {
-        $this->adafruitIO = new AdaFruitIO("aio_LzKZ65Cn46pYdjXQ6b3Nkgw1oL3t");
+        $this->adafruitIO = new AdaFruitIO("aio_JbAv32xKIiqn0AdDSqz1hqBm3hcf");
         $this->ledModel = $this->model("LedModel");
         $this->data['leds'] = $this->ledModel->get_all_leds();
     }
@@ -34,9 +34,11 @@ class Home extends Controller
     }
     function ChangeStatus()
     {
+        $led0 = $this->adafruitIO->getFeed("CPP_LED0");
         if (isset($_POST['ledId']) && isset($_POST['ledStatus'])) {
             $ledId = (int)$_POST['ledId'];
             $ledStatus = $_POST['ledStatus'] == 0 ? '1' : '0';
+            $led0->send($ledStatus);
             if ($this->ledModel->update_status($ledId, $ledStatus))
                 echo 'success';
         } else echo 'Failed';
