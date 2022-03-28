@@ -3,9 +3,9 @@ class Database
 {
     public $conn;
     protected $hostname = "localhost";
-    protected $username = "";
+    protected $username = "root";
     protected $password = "";
-    protected $dbname = "";
+    protected $dbname = "db_smart_led_system";
     function __construct()
     {
         $this->conn = mysqli_connect($this->hostname, $this->username, $this->password, $this->dbname) or die('Can\'t connect to database');

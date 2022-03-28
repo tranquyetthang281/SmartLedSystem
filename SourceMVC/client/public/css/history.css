@@ -1,0 +1,91 @@
+.home-title {
+    position: absolute;
+    font-size: 40px;
+    font-weight: 600;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Roboto', sans-serif;
+    top: 20px;
+}
+
+.history-leds {
+    position: absolute;
+    top: 130px;
+    left: 0;
+}
+
+#listHistory {
+    overflow: auto;
+    height: 250px;
+    list-style-type: none;
+    font-family: monospace;
+    font-size: 14px;
+    justify-content: space-around;
+}
+#listHistory > li {
+    display: inline-block;
+    border: 1px solid;
+}
+::-webkit-scrollbar {
+    width: 5px;
+    border: 1px solid #000;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #fdac53;
+}
+
+::-webkit-scrollbar-button {
+    background-color: #000;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #fff;
+}
+
+.btn-remove:hover {
+    color: #000;
+    transition: 0.2s linear;
+    background-color: #ff9422;
+}
+
+.btn-remove {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #fdac53;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+}
+
+.icon-remove {
+    margin: 0 10px;
+    border-radius: 5px;
+    color: #fdac53;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s linear;
+    position: relative;
+    overflow: hidden;
+}
+
+.icon-remove:hover {
+    color: #000;
+    transition: 0.2s linear;
+    background-color: #ff9422;
+}
+
+.list-led {
+    position: absolute;
+    top: 20%;
+    font-size: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #0d6efd;
+}

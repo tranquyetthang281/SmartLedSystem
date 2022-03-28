@@ -2,18 +2,44 @@
 
 class Home extends Controller
 {
-    public $data;
     public $adafruitIO;
+    protected $ledModel;
+    public $data = array();
 
     public function __construct()
     {
-        $this->data = 0;
         $this->adafruitIO = new AdaFruitIO("aio_LzKZ65Cn46pYdjXQ6b3Nkgw1oL3t");
+        $this->ledModel = $this->model("LedModel");
+        $this->data['leds'] = $this->ledModel->get_all_leds();
     }
 
     function Show()
     {
-        $this->view("HomePage", $this->data);
+        $this->view("Main", $this->data);
+    }
+    function RenderPage($render)
+    {
+        $this->data['render'] = $render;
+        $this->view("Main", $this->data);
+    }
+    function ChangeMode()
+    {
+        if (isset($_POST['ledId']) && isset($_POST['ledMode'])) {
+            $ledId = (int)$_POST['ledId'];
+            $ledMode = $_POST['ledMode'] == 'Auto' ? 'Voice' : 'Auto';
+            if ($this->ledModel->update_mode($ledId, $ledMode))
+                echo $ledMode;
+            else echo 'Failed';
+        } else echo 'Failed';
+    }
+    function ChangeStatus()
+    {
+        if (isset($_POST['ledId']) && isset($_POST['ledStatus'])) {
+            $ledId = (int)$_POST['ledId'];
+            $ledStatus = $_POST['ledStatus'] == 0 ? '1' : '0';
+            if ($this->ledModel->update_status($ledId, $ledStatus))
+                echo 'success';
+        } else echo 'Failed';
     }
 
     function turnOnLed()

@@ -1,0 +1,34 @@
+ function sleep(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms));
+                }
+
+                async function loop()
+                {
+                    while (true) {
+                        $.ajax({
+                            url: DOMAIN + "/Home/testGetData",
+                            type: "post",
+                            data: {
+                                flag: true,
+                            },
+                            success: function(result) {
+                                console.log(result);
+                            },
+                        });
+                        await sleep(1000);
+                    }
+                }
+
+                function turnOnLed() {
+                    // $.ajax({
+                    //     url: DOMAIN + "/Home/turnOnLed",
+                    //     type: "post",
+                    //     data: {
+                    //         flag: true,
+                    //     },
+                    //     success: function(result) {
+                    //         console.log(result);
+                    //     },
+                    // });
+                    loop();
+                }
