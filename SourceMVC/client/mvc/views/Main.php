@@ -19,6 +19,7 @@ $DOMAIN = 'http://localhost/SmartLedSystem/SourceMVC/client/';
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>SmartLedSystem</title>
 </head>
 
