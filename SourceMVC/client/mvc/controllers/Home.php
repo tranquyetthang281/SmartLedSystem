@@ -8,7 +8,7 @@ class Home extends Controller
 
     public function __construct()
     {
-        $this->adafruitIO = new AdaFruitIO("aio_JbAv32xKIiqn0AdDSqz1hqBm3hcf");
+        $this->adafruitIO = new AdaFruitIO("aio_lNsf78sd8eL6IYqDP8isJkcNUuGS");
         $this->ledModel = $this->model("LedModel");
         $this->data['leds'] = $this->ledModel->get_all_leds();
     }
@@ -32,6 +32,7 @@ class Home extends Controller
             else echo 'Failed';
         } else echo 'Failed';
     }
+
     function ChangeStatus()
     {
         $led0 = $this->adafruitIO->getFeed("CPP_LED0");
@@ -44,16 +45,25 @@ class Home extends Controller
         } else echo 'Failed';
     }
 
-    function turnOnLed()
+    function ChangeStatusByServer()
     {
-        $led0 = $this->adafruitIO->getFeed("CPP_LED0");
-        if (isset($_POST["flag"])) {
-            if ($_POST["flag"]) {
-                $led0->send("1");
-            }
-        }
-        return "success";
+        if (isset($_POST['ledId']) && isset($_POST['ledStatus'])) {
+            $ledId = (int)$_POST['ledId'];
+            if ($this->ledModel->update_status($ledId, $_POST['ledStatus']))
+                echo 'success';
+        } else echo 'Failed';
     }
+
+    // function turnOnLed()
+    // {
+    //     $led0 = $this->adafruitIO->getFeed("CPP_LED0");
+    //     if (isset($_POST["flag"])) {
+    //         if ($_POST["flag"]) {
+    //             $led0->send("1");
+    //         }
+    //     }
+    //     return "success";
+    // }
 
     function testGetData()
     {

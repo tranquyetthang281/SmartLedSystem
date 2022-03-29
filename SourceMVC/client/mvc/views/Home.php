@@ -5,7 +5,7 @@
         foreach ($data['leds'] as $key => $value) { ?>
             <li class="home-led-item d-flex justify-content-between" id="led<?php echo $value['id'] ?>">
                 <p data-bs-toggle="collapse" data-bs-target="#led-detail<?php echo $value['id'] ?>">Thiết bị đèn số <?php echo $key + 1  ?></p>
-                <div class="on-off-button <?php echo $value['status'] == 1 ? 'check-on-off' : '' ?>">
+                <div class="on-off-button <?php echo $value['status'] == 1 ? 'check-on-off' : '' ?>" id="led-button<?php echo $value['id'] ?>">
                     <div class="circle-on-off"></div>
                 </div>
             </li>
