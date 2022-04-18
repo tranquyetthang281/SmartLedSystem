@@ -8,7 +8,7 @@ class Home extends Controller
 
     public function __construct()
     {
-        $this->adafruitIO = new AdaFruitIO("aio_lNsf78sd8eL6IYqDP8isJkcNUuGS");
+        $this->adafruitIO = new AdaFruitIO("aio_EJzC83MmD65yTYJJNkwDMuTv6hRp");
         $this->ledModel = $this->model("LedModel");
         $this->data['leds'] = $this->ledModel->get_all_leds();
     }

@@ -6,7 +6,7 @@ from  Adafruit_IO import  MQTTClient
 
 AIO_FEED_IDS = ["cpp-led0"]
 AIO_USERNAME = "thayboingugat"
-AIO_KEY = "aio_jOFp48MaxLhwyYX42iwNj7xXKb5s"
+AIO_KEY = "aio_EJzC83MmD65yTYJJNkwDMuTv6hRp"
 
 def  connected(client):
     print("Ket noi thanh cong...")
@@ -37,7 +37,7 @@ client.loop_background()
 def getPort():
     ports = serial.tools.list_ports.comports()
     N = len(ports)
-    commPort = "None"
+    commPort = "None" 
     for i in range(0, N):
         port = ports[i]
         strPort = str(port)
@@ -84,4 +84,4 @@ while True:
     if isMicrobitConnected:
         readSerial()
 
-    time.sleep(1)
+    time.sleep(2)
