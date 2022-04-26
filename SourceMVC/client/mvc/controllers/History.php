@@ -22,4 +22,23 @@ class History extends Controller
         $result = $this->historyModel->getHistoryByLed($ledId);
         echo json_encode($result) ? json_encode($result) : 'Failed';
     }
+    function deleteHistory()
+    {
+        $historyId = $_POST['historyId'];
+        $history = $this->historyModel->getHistoryById($historyId);
+        $result = $this->historyModel->deleteHistory($historyId);
+        if ($result) {
+            $data = $this->historyModel->getHistoryByLed($history['led_id']);
+            echo json_encode($data) ? json_encode($data) : 'Failed';
+        }
+    }
+    function deleteAll()
+    {
+        $ledId = $_POST['ledId'];
+        if ($ledId == -1) {
+            $ledId = $this->data['leds'][0]['id'];
+        }
+        $this->historyModel->deleteAll($ledId);
+        echo '';
+    }
 }

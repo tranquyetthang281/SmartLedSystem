@@ -37,7 +37,6 @@ $(document).ready(function () {
                 ledStatus: $(this).hasClass('check-on-off') ? 1 : 0,
             },
             success: function (result) {
-                console.log(result);
                 if (result != 'Failed') {
                     updateStatus();
                 } else {
