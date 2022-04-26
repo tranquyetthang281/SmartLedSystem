@@ -32,8 +32,22 @@
 //         ul.appendChild(y);
 //     }
 // }
+var ledIdCurrent = -1;
+function updateView(data) {
+    html = '';
+    if (data) {
+        $.each(data, function (key, value) {
+            html += "<li id='history" + value['id'] + "'>";
+            html += value['time'];
+            html += value['action'] == '1' ? ' Turn On' : ' Turn Off';
+            html += '<i class="material-icons icon-remove" onclick="deleteHistory(this)">delete</i>';
+        });
+    }
+    $('#listHistory').html(html);
+}
 function changeLed(selected) {
     ledId = selected.value.split('led')[1];
+    ledIdCurrent = ledId;
     $.ajax({
         url: DOMAIN + 'History/getHistory',
         type: 'post',
@@ -42,25 +56,47 @@ function changeLed(selected) {
         },
         dataType: 'json',
         success: function (result) {
-            console.log(result);
             if (result != 'Failed') {
-                html = '';
-                if (result) {
-                    $.each(result, function (key, value) {
-                        html += "<li id='history" + value['id'] + "'>";
-                        html += value['time'];
-                        html += value['action'] == '1' ? ' Turn On' : ' Turn Off';
-                        html += '<i class="material-icons icon-remove">delete</i>';
-                    });
-                }
-                $('#listHistory').html(html);
+                updateView(result);
             } else {
                 console.log('failed');
             }
         },
     });
 }
+$('.icon-remove').click(function () {});
 
+function deleteHistory(selected) {
+    historyId = selected.parentNode.id.split('history')[1];
+    $.ajax({
+        url: DOMAIN + 'History/deleteHistory',
+        type: 'post',
+        data: {
+            historyId: historyId,
+        },
+        dataType: 'json',
+        success: function (result) {
+            if (result != 'Failed') {
+                updateView(result);
+            } else {
+                console.log('failed');
+            }
+        },
+    });
+}
 function removeAll() {
-    $('#listHistory').empty();
+    $.ajax({
+        url: DOMAIN + 'History/deleteAll',
+        type: 'post',
+        data: {
+            ledId: ledIdCurrent,
+        },
+        success: function (result) {
+            if (result != 'Failed') {
+                updateView(result);
+            } else {
+                console.log('failed');
+            }
+        },
+    });
 }

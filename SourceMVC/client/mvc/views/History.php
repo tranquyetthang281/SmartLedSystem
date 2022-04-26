@@ -20,7 +20,7 @@
                     <li id='history<?php echo $value['id'] ?>'>
                         <?php echo $value['time'] ?>
                         <?php echo $value['action'] == '1' ? 'Turn On' : 'Turn Off' ?>
-                        <i class="material-icons icon-remove">delete</i>
+                        <i class="material-icons icon-remove" onclick="deleteHistory(this)">delete</i>
                     </li>
             <?php }
             } ?>
