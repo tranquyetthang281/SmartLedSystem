@@ -16,4 +16,9 @@ class LedModel extends Database
         $sql = "UPDATE led SET status = '{$status}' where id = {$id}";
         return $this->query($sql);
     }
+    function get_count_leds()
+    {
+        $sql = "SELECT COUNT(id) FROM led";
+        return $this->query($sql);
+    }
 }

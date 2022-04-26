@@ -50,6 +50,7 @@ drop table if exists sensor;
 create table sensor(
     id int not null auto_increment,
     type varchar(20),
+    user_id int not null,
     primary key(id)
 );
 
@@ -73,3 +74,6 @@ ADD FOREIGN KEY (led_id) REFERENCES led(id);
 
 ALTER TABLE sensor_control_led
 ADD FOREIGN KEY (sensor_id) REFERENCES sensor(id);
+
+ALTER TABLE sensor
+ADD FOREIGN KEY (user_id) REFERENCES app_user(id);
