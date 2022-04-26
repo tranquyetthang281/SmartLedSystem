@@ -1,6 +1,6 @@
 <div class="body">
     <div class="home-title">Home</div>
-    <ul class="home-leds">
+    <ul class="home-leds" id="id-home-leds">
         <?php
         foreach ($data['leds'] as $key => $value) { ?>
             <li class="home-led-item d-flex justify-content-between" id="led<?php echo $value['id'] ?>">
