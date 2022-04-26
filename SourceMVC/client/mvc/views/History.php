@@ -13,13 +13,17 @@
     </div>
     <div class="history-leds">
         <ul id="listHistory">
-            <?php foreach ($data['history'] as $key => $value) { ?>
-                <li id='history<?php echo $value['id'] ?>'>
-                    <?php echo $value['time'] ?>
-                    <?php echo $value['action'] == '1' ? 'Turn On' : 'Turn Off' ?>
-                    <i class="material-icons icon-remove">delete</i>
-                </li>
-            <?php } ?>
+            <?php
+            if ($data['history']) {
+
+                foreach ($data['history'] as $key => $value) { ?>
+                    <li id='history<?php echo $value['id'] ?>'>
+                        <?php echo $value['time'] ?>
+                        <?php echo $value['action'] == '1' ? 'Turn On' : 'Turn Off' ?>
+                        <i class="material-icons icon-remove">delete</i>
+                    </li>
+            <?php }
+            } ?>
         </ul>
     </div>
     <div>

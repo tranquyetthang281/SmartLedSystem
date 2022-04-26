@@ -7,7 +7,7 @@ class History extends Controller
     function __construct()
     {
         $this->ledModel = $this->model('LedModel');
-        $this->historyModel = $this->model('historyModel');
+        $this->historyModel = $this->model('HistoryModel');
         $this->data['render'] = 'History';
         $this->data['leds'] = $this->ledModel->get_all_leds();
         $this->data['history'] = $this->historyModel->getHistoryByLed($this->data['leds'][0]['id']);
@@ -20,6 +20,6 @@ class History extends Controller
     {
         $ledId = $_POST['ledId'];
         $result = $this->historyModel->getHistoryByLed($ledId);
-        echo $result ? $result : 'Failed';
+        echo json_encode($result) ? json_encode($result) : 'Failed';
     }
 }
