@@ -18,7 +18,7 @@ class LedModel extends Database
     }
     function get_count_leds()
     {
-        $sql = "SELECT COUNT(id) FROM led";
-        return $this->query($sql);
+        $sql = "SELECT COUNT(id) FROM led AS num";
+        return $this->get_one($sql);
     }
 }
