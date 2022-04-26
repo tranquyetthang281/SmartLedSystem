@@ -40,14 +40,20 @@ function changeLed(selected) {
         data: {
             ledId: ledId,
         },
+        dataType: 'json',
         success: function (result) {
             console.log(result);
             if (result != 'Failed') {
                 html = '';
-                html += "<li id='history:" + result['id'] + "'>";
-                html += result['time'];
-                html += result['action'] == '1' ? 'Turn On' : 'Turn Off';
-                html += '<i class="material-icons icon-remove">delete</i>';
+                if (result) {
+                    $.each(result, function (key, value) {
+                        html += "<li id='history" + value['id'] + "'>";
+                        html += value['time'];
+                        html += value['action'] == '1' ? ' Turn On' : ' Turn Off';
+                        html += '<i class="material-icons icon-remove">delete</i>';
+                    });
+                }
+                $('#listHistory').html(html);
             } else {
                 console.log('failed');
             }
