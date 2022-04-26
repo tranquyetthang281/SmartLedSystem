@@ -1,10 +1,10 @@
 <?php
 class Light {
-    static function switchOn() {
+    function switchOn() {
         echo "light on";
     }
 
-    static function switchOff() {
+    function switchOff() {
         echo "light off";
     }
 }
@@ -14,14 +14,20 @@ interface Command {
 }
 
 class CommandOff implements Command {
+    public Light $light;
+
     function execute() {
-        Light::switchOff();
+        // $this->light = new Light();
+        $this->light->switchOff();
     }
 }
 
 class CommandOn implements Command {
+    public Light $light;
+    
     function execute() {
-        Light::switchOn();
+        // $this->light = new Light();
+        $this->light->switchOn();
     }
 }
 
