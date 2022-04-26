@@ -44,7 +44,7 @@ $DOMAIN = 'http://localhost/SmartLedSystem/SourceMVC/client/';
                             </a>
                         </div>
                         <div class="history-icon icon-footer">
-                            <a href="<?php echo $DOMAIN ?>Home/RenderPage/History">
+                            <a href="<?php echo $DOMAIN ?>History/Show">
                                 <ion-icon name="timer-outline"></ion-icon>
                             </a>
                         </div>
