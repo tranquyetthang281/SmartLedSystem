@@ -6,6 +6,11 @@ class LedModel extends Database
         $sql = "SELECT * from led ";
         return $this->get_list($sql);
     }
+    function get_led($ledId)
+    {
+        $sql = "SELECT * from led WHERE id = {$ledId}";
+        return $this->get_one($sql);
+    }
     function update_mode($id, $mode)
     {
         $sql = "UPDATE led SET mode = '{$mode}' where id = {$id}";
