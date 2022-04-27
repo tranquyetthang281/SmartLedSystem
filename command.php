@@ -14,7 +14,12 @@ interface Command {
 }
 
 class CommandOff implements Command {
-    public Light $light;
+    public $id_led;
+
+    function __construct($id_led)
+    {
+        $this->id_led = $id_led;
+    }
 
     function execute() {
         // $this->light = new Light();
@@ -46,7 +51,7 @@ class RemoteControl {
 }
 
 $remote = new RemoteControl();
-$commandOff = new CommandOff();
+$commandOff = new CommandOff(10);
 $remote->setCommand($commandOff);
 $remote->run();
 

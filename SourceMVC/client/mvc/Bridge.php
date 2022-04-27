@@ -11,3 +11,13 @@ require_once "./mvc/core/AdafruitIO.php";
 require_once "./mvc/core/Session.php";
 
 require_once "./mvc/core/Role.php";
+
+require_once "./mvc/core/CMP/Light.php";
+
+require_once "./mvc/core/CMP/RemoteControl.php";
+
+require_once "./mvc/core/CMP/Command.php";
+
+require_once "./mvc/core/CMP/TurnOffLedCommand.php";
+
+require_once "./mvc/core/CMP/TurnOnLedCommand.php";
