@@ -124,7 +124,7 @@ $(document).ready(function () {
                     success: function (result) {
                         console.log(result);
                         if (result != 'Failed') {
-                            updateStatus();
+                            if (result == '1') location.reload();
                         } else {
                             console.log('failed');
                         }
@@ -147,5 +147,5 @@ $(document).ready(function () {
                 // }
             },
         });
-    }, 10000);
+    }, 4000);
 });
