@@ -107,7 +107,6 @@ $(document).ready(function () {
     //         }, 2000);
     // });
 
-    var newStatus = 0;
     setInterval(function () {
         $.ajax({
             url: DOMAIN + "/Home/getInfraredData",
@@ -116,11 +115,11 @@ $(document).ready(function () {
                 console.log(result);
                 // newStatus = (parseInt(result) > 50) ? 1 : 0;
                 $.ajax({
-                    url: DOMAIN + 'Home/ChangeStatusByServer',
+                    url: DOMAIN + 'Home/ChangeStatus',
                     type: 'post',
                     data: {
                         ledId: 1,
-                        ledStatus: (parseInt(result) > 50) ? '1' : '0',
+                        ledStatus: (parseInt(result) > 50) ? 1 : 0,
                     },
                     success: function (result) {
                         console.log(result);
@@ -131,21 +130,21 @@ $(document).ready(function () {
                         }
                     },
                 });
-                if ($('#led-button1').hasClass('check-on-off')) {
-                    $('#led-button1').removeClass('check-on-off');
-                    $('#led-button1').children().css('background-color', 'white');
-                    $('#led-button1').parent().css('background-color', 'rgb(255, 93, 93)');
-                    $('#led-button1').children().animate({
-                        left: '2px',
-                    });
-                } else {
-                    $('#led-button1').addClass('check-on-off');
-                    $('#led-button1').children().css('background-color', 'black');
-                    $('#led-button1').parent().css('background-color', 'rgb(131, 248, 170)');
-                    $('#led-button1').children().animate({
-                        left: '26px',
-                    });
-                }
+                // if ($('#led-button1').hasClass('check-on-off')) {
+                //     $('#led-button1').removeClass('check-on-off');
+                //     $('#led-button1').children().css('background-color', 'white');
+                //     $('#led-button1').parent().css('background-color', 'rgb(255, 93, 93)');
+                //     $('#led-button1').children().animate({
+                //         left: '2px',
+                //     });
+                // } else {
+                //     $('#led-button1').addClass('check-on-off');
+                //     $('#led-button1').children().css('background-color', 'black');
+                //     $('#led-button1').parent().css('background-color', 'rgb(131, 248, 170)');
+                //     $('#led-button1').children().animate({
+                //         left: '26px',
+                //     });
+                // }
             },
         });
     }, 2000);

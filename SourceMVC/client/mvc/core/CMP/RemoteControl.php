@@ -12,6 +12,7 @@ class RemoteControl
     function run()
     {
         if ($this->command)
-            $this->command->execute();
+            return $this->command->execute();
+        return "0";
     }
 }

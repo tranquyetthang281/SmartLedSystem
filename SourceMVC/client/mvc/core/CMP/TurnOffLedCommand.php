@@ -11,6 +11,6 @@ class TurnOffLedCommand implements Command
 
     function execute()
     {
-        Light::sendOffStatus($this->id_led);
+        return Light::sendOffStatus($this->id_led);
     }
 }

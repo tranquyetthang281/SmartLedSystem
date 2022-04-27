@@ -1,6 +1,6 @@
 <?php
 
-class GetInfraredData implements Command
+class GetInfraredDataCommand implements Command
 {
     private $id_infra;
 
@@ -11,6 +11,6 @@ class GetInfraredData implements Command
 
     function execute()
     {
-        Sensor::getInfraredData($this->id_infra);
+        return Sensor::getInfraredData($this->id_infra);
     }
 }

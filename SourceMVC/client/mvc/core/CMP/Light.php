@@ -7,6 +7,7 @@ class Light extends Device
         $feedName = "CPP_LED" . ($id_led - 1);
         $led = self::$adafruitIO->getFeed($feedName);
         $led->send('1');
+        return "1";
     }
 
     static function sendOffStatus($id_led)
@@ -14,5 +15,6 @@ class Light extends Device
         $feedName = "CPP_LED" . ($id_led - 1);
         $led = self::$adafruitIO->getFeed($feedName);
         $led->send('0');
+        return "1";
     }
 }
