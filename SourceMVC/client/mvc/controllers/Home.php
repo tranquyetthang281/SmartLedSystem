@@ -95,8 +95,10 @@ class Home extends Controller
         echo $led0->get();
     }
     
-    function getInfraredData()
-    {
-        
-    }
+    // function getInfraredData()
+    // {
+    //     $command = new GetInfraredData(0);
+    //     $this->remote->setCommand($command);
+    //     echo $this-> 
+    // }
 }
