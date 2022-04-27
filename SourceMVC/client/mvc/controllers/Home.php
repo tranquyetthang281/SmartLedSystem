@@ -73,6 +73,11 @@ class Home extends Controller
         } else echo 'Failed';
     }
 
+    function ChangeStatusByInfrared()
+    {
+
+    }
+
     // function turnOnLed()
     // {
     //     $led0 = $this->adafruitIO->getFeed("CPP_LED0");
@@ -88,5 +93,10 @@ class Home extends Controller
     {
         $led0 = $this->adafruitIO->getFeed("CPP_LED0");
         echo $led0->get();
+    }
+    
+    function getInfraredData()
+    {
+        
     }
 }

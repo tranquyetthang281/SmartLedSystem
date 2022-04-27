@@ -61,48 +61,92 @@ $(document).ready(function () {
         }
     });
 
-        setInterval(function () {
-            $.ajax({
-                url: DOMAIN + "/Home/testGetData",
-                type: "post",
-                success: function (result) {
-                    console.log(result, oldStatus);
-                    if (result != oldStatus)
-                    {
-                        oldStatus = result;
-                        $.ajax({
-                            url: DOMAIN + 'Home/ChangeStatusByServer',
-                            type: 'post',
-                            data: {
-                                ledId: 1,
-                                ledStatus: result,
-                            },
-                            success: function (result) {
-                                console.log(result);
-                                if (result != 'Failed') {
-                                    updateStatus();
-                                } else {
-                                    console.log('failed');
-                                }
-                            },
-                        });
-                        if ($('#led-button1').hasClass('check-on-off')) {
-                            $('#led-button1').removeClass('check-on-off');
-                            $('#led-button1').children().css('background-color', 'white');
-                            $('#led-button1').parent().css('background-color', 'rgb(255, 93, 93)');
-                            $('#led-button1').children().animate({
-                                left: '2px',
-                            });
+    //         setInterval(function () {
+    //             $.ajax({
+    //                 url: DOMAIN + "/Home/testGetData",
+    //                 type: "post",
+    //                 success: function (result) {
+    //                     console.log(result, oldStatus);
+    //                     if (result != oldStatus)
+    //                     {
+    //                         oldStatus = result;
+    //                         $.ajax({
+    //                             url: DOMAIN + 'Home/ChangeStatusByServer',
+    //                             type: 'post',
+    //                             data: {
+    //                                 ledId: 1,
+    //                                 ledStatus: result,
+    //                             },
+    //                             success: function (result) {
+    //                                 console.log(result);
+    //                                 if (result != 'Failed') {
+    //                                     updateStatus();
+    //                                 } else {
+    //                                     console.log('failed');
+    //                                 }
+    //                             },
+    //                         });
+    //                         if ($('#led-button1').hasClass('check-on-off')) {
+    //                             $('#led-button1').removeClass('check-on-off');
+    //                             $('#led-button1').children().css('background-color', 'white');
+    //                             $('#led-button1').parent().css('background-color', 'rgb(255, 93, 93)');
+    //                             $('#led-button1').children().animate({
+    //                                 left: '2px',
+    //                             });
+    //                         } else {
+    //                             $('#led-button1').addClass('check-on-off');
+    //                             $('#led-button1').children().css('background-color', 'black');
+    //                             $('#led-button1').parent().css('background-color', 'rgb(131, 248, 170)');
+    //                             $('#led-button1').children().animate({
+    //                                 left: '26px',
+    //                             });
+    //                         }
+    //                     }
+    //                 },
+    //             });
+    //         }, 2000);
+    // });
+
+    var newStatus = 0;
+    setInterval(function () {
+        $.ajax({
+            url: DOMAIN + "/Home/getInfraredData",
+            type: "post",
+            success: function (result) {
+                console.log(result);
+                // newStatus = (parseInt(result) > 50) ? 1 : 0;
+                $.ajax({
+                    url: DOMAIN + 'Home/ChangeStatusByServer',
+                    type: 'post',
+                    data: {
+                        ledId: 1,
+                        ledStatus: (parseInt(result) > 50) ? '1' : '0',
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        if (result != 'Failed') {
+                            updateStatus();
                         } else {
-                            $('#led-button1').addClass('check-on-off');
-                            $('#led-button1').children().css('background-color', 'black');
-                            $('#led-button1').parent().css('background-color', 'rgb(131, 248, 170)');
-                            $('#led-button1').children().animate({
-                                left: '26px',
-                            });
+                            console.log('failed');
                         }
-                    }
-                },
-            });
-        }, 2000);
+                    },
+                });
+                if ($('#led-button1').hasClass('check-on-off')) {
+                    $('#led-button1').removeClass('check-on-off');
+                    $('#led-button1').children().css('background-color', 'white');
+                    $('#led-button1').parent().css('background-color', 'rgb(255, 93, 93)');
+                    $('#led-button1').children().animate({
+                        left: '2px',
+                    });
+                } else {
+                    $('#led-button1').addClass('check-on-off');
+                    $('#led-button1').children().css('background-color', 'black');
+                    $('#led-button1').parent().css('background-color', 'rgb(131, 248, 170)');
+                    $('#led-button1').children().animate({
+                        left: '26px',
+                    });
+                }
+            },
+        });
+    }, 2000);
 });

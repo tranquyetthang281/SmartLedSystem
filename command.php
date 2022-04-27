@@ -50,9 +50,23 @@ class RemoteControl {
     }
 }
 
-$remote = new RemoteControl();
-$commandOff = new CommandOff(10);
-$remote->setCommand($commandOff);
-$remote->run();
+// $remote = new RemoteControl();
+// $commandOff = new CommandOff(10);
+// $remote->setCommand($commandOff);
+// $remote->run();
+
+class A {
+    public static $count = 0;
+} 
+
+class B extends A {
+    
+}
+
+$a = new A();
+A::$count = 10;
+
+echo B::$count;
+
 
 ?>
