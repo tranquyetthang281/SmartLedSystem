@@ -5,6 +5,7 @@ class Home extends Controller
     // public $adafruitIO;
     protected $ledModel;
     protected $historyModel;
+    protected $sensorModel;
     public $data = array();
     protected $remote;
 
@@ -14,6 +15,7 @@ class Home extends Controller
         $this->remote = new RemoteControl();
         $this->ledModel = $this->model("LedModel");
         $this->historyModel = $this->model("HistoryModel");
+        $this->sensorModel = $this->model("SensorModel");
         $this->data['leds'] = $this->ledModel->get_all_leds();
     }
 
@@ -63,7 +65,31 @@ class Home extends Controller
         // $remote->setCommand($commandOff);
         // $remote->run();
     }
+    function ChangeStatus2()
+    {
+        if (isset($_POST['l'])) {
+            $l1 = explode(' ', $_POST['l']);
+            for ($i = 0; $i < sizeof($l1); $i+=2) {
+                $ledId = (int)$l1[$i];
+                if ((int)($l1[$i + 1]) > 50) {
 
+                    $ledStatus = '1';
+                } else $ledStatus = '0';
+                if ($ledStatus)
+                    $command = new TurnOnLedCommand($ledId);
+                else
+                    $command = new TurnOffLedCommand($ledId);
+                $this->remote->setCommand($command);
+                $this->remote->run();
+                //$led0->send($ledStatus);
+                // if ($this->ledModel->update_status($ledId, $ledStatus)) {
+                //     $time = date("Y-m-d h:i:sa");
+                //     $this->historyModel->addHistory($ledId, $ledStatus, $time);
+                //     echo 'success';
+                // }
+            }
+        } else echo 'Failed';
+    }
     function ChangeStatusByServer()
     {
         if (isset($_POST['ledId']) && isset($_POST['ledStatus'])) {
@@ -75,7 +101,6 @@ class Home extends Controller
 
     function ChangeStatusByInfrared()
     {
-
     }
 
     // function turnOnLed()
@@ -94,11 +119,16 @@ class Home extends Controller
         $led0 = $this->adafruitIO->getFeed("CPP_LED0");
         echo $led0->get();
     }
-    
+
     function getInfraredData()
     {
-        $command = new GetInfraredDataCommand(0);
-        $this->remote->setCommand($command);
-        echo $this->remote->run(); 
+        $infrared_leds =  $this->sensorModel->get_infrared_leds();
+        foreach ($infrared_leds as $key => $value) {
+            // echo "Key: ".$key.'-';
+            // echo "Value: ". $value['sensor_id'].$value['led_id'];
+            $command = new GetInfraredDataCommand($value['sensor_id']);
+            $this->remote->setCommand($command);
+            echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
+        }
     }
 }

@@ -112,14 +112,13 @@ $(document).ready(function () {
             url: DOMAIN + "/Home/getInfraredData",
             type: "post",
             success: function (result) {
-                console.log(result);
+                console.log('+',result);
                 // newStatus = (parseInt(result) > 50) ? 1 : 0;
                 $.ajax({
-                    url: DOMAIN + 'Home/ChangeStatus',
+                    url: DOMAIN + 'Home/ChangeStatus2',
                     type: 'post',
                     data: {
-                        ledId: 1,
-                        ledStatus: (parseInt(result) > 50) ? 1 : 0,
+                        l: result
                     },
                     success: function (result) {
                         console.log(result);
@@ -147,5 +146,5 @@ $(document).ready(function () {
                 // }
             },
         });
-    }, 2000);
+    }, 10000);
 });
