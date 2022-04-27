@@ -11,6 +11,11 @@ class HistoryModel extends Database
         $sql = "SELECT * FROM history WHERE led_id = {$ledId} ";
         return $this->get_list($sql);
     }
+    function getLastedHistory($ledId)
+    {
+        $sql = "SELECT * FROM history WHERE led_id = {$ledId} ORDER BY ID DESC LIMIT 1 ";
+        return $this->get_one($sql);
+    }
     function getHistoryById($historyId)
     {
         $sql = "SELECT * FROM history WHERE id = {$historyId} ";

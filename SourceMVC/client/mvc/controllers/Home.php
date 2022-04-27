@@ -1,11 +1,14 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 class Home extends Controller
 {
     // public $adafruitIO;
     protected $ledModel;
     protected $historyModel;
     protected $sensorModel;
+    protected $energyModel;
     public $data = array();
     protected $remote;
 
@@ -16,6 +19,7 @@ class Home extends Controller
         $this->ledModel = $this->model("LedModel");
         $this->historyModel = $this->model("HistoryModel");
         $this->sensorModel = $this->model("SensorModel");
+        $this->energyModel = $this->model("EnergyModel");
         $this->data['leds'] = $this->ledModel->get_all_leds();
     }
 
@@ -55,9 +59,14 @@ class Home extends Controller
             $this->remote->run();
             //$led0->send($ledStatus);
             if ($this->ledModel->update_status($ledId, $ledStatus)) {
-                $time = date("Y-m-d h:i:sa");
+                $time = date("Y-m-d h:i:s");
+                $lastTime = $this->historyModel->getLastedHistory($ledId)['time'];
                 $this->historyModel->addHistory($ledId, $ledStatus, $time);
-                echo 'success';
+                if ($ledStatus == '0') {
+                    $used_time = strtotime($time) - strtotime($lastTime);
+                    $used_energy = $used_time / 3600 * (int)$this->ledModel->get_led($ledId)['wattage'];
+                    $this->energyModel->handleEnergy($ledId, $used_energy);
+                }
             }
         } else echo 'Failed';
 
@@ -130,5 +139,8 @@ class Home extends Controller
             $this->remote->setCommand($command);
             echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
         }
+        // $command = new GetInfraredDataCommand(0);
+        // $this->remote->setCommand($command);
+        // echo $this->remote->run();
     }
 }

@@ -38,6 +38,7 @@ $(document).ready(function () {
             },
             success: function (result) {
                 if (result != 'Failed') {
+                    console.log(result);
                     updateStatus();
                 } else {
                     console.log('failed');
