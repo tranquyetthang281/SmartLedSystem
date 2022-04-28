@@ -1,6 +1,7 @@
 <?php
 
-use function PHPSTORM_META\type;
+$INFRARED_MIN = 50;
+$SOUND_MIN = 200;
 
 class Home extends Controller
 {
@@ -50,9 +51,9 @@ class Home extends Controller
             $ledId = (int)$_POST['ledId'];
             $newLedStatus = $_POST['ledStatus'] == 0 ? '1' : '0';
             if ($newLedStatus)
-                $command = new TurnOnLedCommand($ledId);
+            $command = new TurnOnLedCommand($ledId);
             else
-                $command = new TurnOffLedCommand($ledId);
+            $command = new TurnOffLedCommand($ledId);
             $this->remote->setCommand($command);
             $this->remote->run();
             //$led0->send($newLedStatus);
@@ -69,9 +70,11 @@ class Home extends Controller
             }
         } else echo 'Failed';
     }
-
+    
     function ChangeStatusBySensor()
     {
+        global $INFRARED_MIN;
+        global $SOUND_MIN;
         if (isset($_POST['l'])) {
             $l1 = explode(' ', $_POST['l']);
             $flag = '0';
@@ -80,13 +83,13 @@ class Home extends Controller
                 $led = $this->ledModel->get_led($ledId);
                 // echo '*' . $led['status'];
                 if ($led['mode'] == 'Auto') {
-                    if ((int)($l1[$i + 1]) > 50) {
+                    if ((int)($l1[$i + 1]) > $INFRARED_MIN) {
                         $newLedStatus = '1';
                     } else $newLedStatus = '0';
                 } else {
-                    if ((int)($l1[$i + 1]) > 200) {
-                        $newLedStatus = '1';
-                    } else $newLedStatus = '0';
+                    if ((int)($l1[$i + 1]) > $SOUND_MIN) {
+                        $newLedStatus = $led['status'] == '1' ? '0' : '1';
+                    } else continue;
                 }
 
                 // if ((int)($l1[$i + 1]) > 50) {
@@ -149,15 +152,15 @@ class Home extends Controller
             }
         }
 
-        // $sound_sensors =  $this->sensorModel->get_sound_sensors();
-        // foreach ($sound_sensors as $key => $value) {
-        //     $led = $this->ledModel->get_led($value['led_id']);  
-        //     // if ($led['mode'] == 'Sound') {
-        //     if ($led['mode'] != 'Auto') {
-        //         $command = new GetInfraredDataCommand($value['sensor_id']);
-        //         $this->remote->setCommand($command);
-        //         echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
-        //     }
-        // }
+        $sound_sensors =  $this->sensorModel->get_sound_sensors();
+        foreach ($sound_sensors as $key => $value) {
+            $led = $this->ledModel->get_led($value['led_id']);  
+            // if ($led['mode'] == 'Sound') {
+            if ($led['mode'] != 'Auto') {
+                $command = new GetSoundDataCommand($value['sensor_id']);
+                $this->remote->setCommand($command);
+                echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
+            }
+        }
     }
 }
