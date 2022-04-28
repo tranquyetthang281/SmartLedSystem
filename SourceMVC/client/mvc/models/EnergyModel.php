@@ -11,6 +11,7 @@ class EnergyModel extends Database
     function handleEnergy($ledId, $energy)
     {
         // $used_time (hours)
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $time =  date("Y-m");
         $used_energy = $this->checkUsed($ledId, $time);
         if ($used_energy != 'None') {

@@ -57,6 +57,7 @@ class Home extends Controller
             $this->remote->run();
             //$led0->send($newLedStatus);
             if ($this->ledModel->update_status($ledId, $newLedStatus)) {
+                date_default_timezone_set("Asia/Ho_Chi_Minh");
                 $time = date("Y-m-d h:i:s");
                 $lastTime = $this->historyModel->getLastedHistory($ledId)['time'];
                 $this->historyModel->addHistory($ledId, $newLedStatus, $time);
@@ -98,6 +99,18 @@ class Home extends Controller
                         $this->remote->setCommand($command);
                         $this->remote->run();
                         $flag = '1';
+                        //$led0->send($newLedStatus);
+                        if ($this->ledModel->update_status($ledId, $newLedStatus)) {
+                            date_default_timezone_set("Asia/Ho_Chi_Minh");
+                            $time = date("Y-m-d h:i:s");
+                            $lastTime = $this->historyModel->getLastedHistory($ledId)['time'];
+                            $this->historyModel->addHistory($ledId, $newLedStatus, $time);
+                            if ($newLedStatus == '0') {
+                                $used_time = strtotime($time) - strtotime($lastTime);
+                                $used_energy = $used_time / 3600 * (int)$this->ledModel->get_led($ledId)['wattage'];
+                                $this->energyModel->handleEnergy($ledId, $used_energy);
+                            }
+                        }
                     }
                 } else {
                     if ($led['status'] == '1') {
@@ -105,12 +118,19 @@ class Home extends Controller
                         $this->remote->setCommand($command);
                         $this->remote->run();
                         $flag = '1';
+                        //$led0->send($newLedStatus);
+                        if ($this->ledModel->update_status($ledId, $newLedStatus)) {
+                            date_default_timezone_set("Asia/Ho_Chi_Minh");
+                            $time = date("Y-m-d h:i:s");
+                            $lastTime = $this->historyModel->getLastedHistory($ledId)['time'];
+                            $this->historyModel->addHistory($ledId, $newLedStatus, $time);
+                            if ($newLedStatus == '0') {
+                                $used_time = strtotime($time) - strtotime($lastTime);
+                                $used_energy = $used_time / 3600 * (int)$this->ledModel->get_led($ledId)['wattage'];
+                                $this->energyModel->handleEnergy($ledId, $used_energy);
+                            }
+                        }
                     }
-                }
-                //$led0->send($newLedStatus);
-                if ($this->ledModel->update_status($ledId, $newLedStatus)) {
-                    $time = date("Y-m-d h:i:sa");
-                    $this->historyModel->addHistory($ledId, $newLedStatus, $time);
                 }
             }
             echo $flag;
