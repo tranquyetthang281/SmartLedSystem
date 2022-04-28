@@ -28,3 +28,6 @@ require_once "./mvc/core/CMP/TurnOnLedCommand.php";
 
 require_once "./mvc/core/CMP/GetInfraredDataCommand.php";
 
+require_once "./mvc/core/CMP/GetSoundDataCommand.php";
+
+?>

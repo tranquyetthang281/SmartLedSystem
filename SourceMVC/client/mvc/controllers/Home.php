@@ -4,7 +4,6 @@ use function PHPSTORM_META\type;
 
 class Home extends Controller
 {
-    // public $adafruitIO;
     protected $ledModel;
     protected $historyModel;
     protected $sensorModel;
@@ -14,7 +13,6 @@ class Home extends Controller
 
     public function __construct()
     {
-        // $this->adafruitIO = new AdaFruitIO("aio_EJzC83MmD65yTYJJNkwDMuTv6hRp");
         $this->remote = new RemoteControl();
         $this->ledModel = $this->model("LedModel");
         $this->historyModel = $this->model("HistoryModel");
@@ -50,97 +48,96 @@ class Home extends Controller
         //$led0 = $this->adafruitIO->getFeed("CPP_LED0");
         if (isset($_POST['ledId']) && isset($_POST['ledStatus'])) {
             $ledId = (int)$_POST['ledId'];
-            $ledStatus = $_POST['ledStatus'] == 0 ? '1' : '0';
-            if ($ledStatus)
+            $newLedStatus = $_POST['ledStatus'] == 0 ? '1' : '0';
+            if ($newLedStatus)
                 $command = new TurnOnLedCommand($ledId);
             else
                 $command = new TurnOffLedCommand($ledId);
             $this->remote->setCommand($command);
             $this->remote->run();
-            //$led0->send($ledStatus);
-            if ($this->ledModel->update_status($ledId, $ledStatus)) {
+            //$led0->send($newLedStatus);
+            if ($this->ledModel->update_status($ledId, $newLedStatus)) {
                 $time = date("Y-m-d h:i:s");
                 $lastTime = $this->historyModel->getLastedHistory($ledId)['time'];
-                $this->historyModel->addHistory($ledId, $ledStatus, $time);
-                if ($ledStatus == '0') {
+                $this->historyModel->addHistory($ledId, $newLedStatus, $time);
+                if ($newLedStatus == '0') {
                     $used_time = strtotime($time) - strtotime($lastTime);
                     $used_energy = $used_time / 3600 * (int)$this->ledModel->get_led($ledId)['wattage'];
                     $this->energyModel->handleEnergy($ledId, $used_energy);
                 }
             }
         } else echo 'Failed';
-
-        // $commandOff = new CommandOff(10);
-        // $remote->setCommand($commandOff);
-        // $remote->run();
     }
-    function ChangeStatus2()
+
+    function ChangeStatusBySensor()
     {
         if (isset($_POST['l'])) {
             $l1 = explode(' ', $_POST['l']);
-            for ($i = 0; $i < sizeof($l1); $i += 2) {
+            $flag = '0';
+            for ($i = 0; $i + 1 < sizeof($l1); $i += 2) {
                 $ledId = (int)$l1[$i];
-                if ((int)($l1[$i + 1]) > 50) {
-                    $ledStatus = '1';
-                } 
-                else $ledStatus = '0';
-                if ($ledStatus)
-                    $command = new TurnOnLedCommand($ledId);
-                else
-                    $command = new TurnOffLedCommand($ledId);
-                $this->remote->setCommand($command);
-                $this->remote->run();
-                //$led0->send($ledStatus);
-                // if ($this->ledModel->update_status($ledId, $ledStatus)) {
-                //     $time = date("Y-m-d h:i:sa");
-                //     $this->historyModel->addHistory($ledId, $ledStatus, $time);
-                //     echo 'success';
-                // }
+                $led = $this->ledModel->get_led($ledId);
+                // echo '*' . $led['status'];
+                if ($led['mode'] == 'Auto') {
+                    if ((int)($l1[$i + 1]) > 50) {
+                        $newLedStatus = '1';
+                    } else $newLedStatus = '0';
+                } else {
+                    if ((int)($l1[$i + 1]) > 200) {
+                        $newLedStatus = '1';
+                    } else $newLedStatus = '0';
+                }
+
+                // if ((int)($l1[$i + 1]) > 50) {
+                //     $newLedStatus = '1';
+                // } else $newLedStatus = '0';
+
+                if ($newLedStatus == '1') {
+                    if ($led['status'] == '0') {
+                        $command = new TurnOnLedCommand($ledId);
+                        $this->remote->setCommand($command);
+                        $this->remote->run();
+                        $flag = '1';
+                    }
+                } else {
+                    if ($led['status'] == '1') {
+                        $command = new TurnOffLedCommand($ledId);
+                        $this->remote->setCommand($command);
+                        $this->remote->run();
+                        $flag = '1';
+                    }
+                }
+                //$led0->send($newLedStatus);
+                if ($this->ledModel->update_status($ledId, $newLedStatus)) {
+                    $time = date("Y-m-d h:i:sa");
+                    $this->historyModel->addHistory($ledId, $newLedStatus, $time);
+                }
             }
-        } else echo 'Failed';
-    }
-    function ChangeStatusByServer()
-    {
-        if (isset($_POST['ledId']) && isset($_POST['ledStatus'])) {
-            $ledId = (int)$_POST['ledId'];
-            if ($this->ledModel->update_status($ledId, $_POST['ledStatus']))
-                echo 'success';
+            echo $flag;
         } else echo 'Failed';
     }
 
-    function ChangeStatusByInfrared()
+    function getSensorData()
     {
-    }
-
-    // function turnOnLed()
-    // {
-    //     $led0 = $this->adafruitIO->getFeed("CPP_LED0");
-    //     if (isset($_POST["flag"])) {
-    //         if ($_POST["flag"]) {
-    //             $led0->send("1");
-    //         }
-    //     }
-    //     return "success";
-    // }
-
-    function testGetData()
-    {
-        $led0 = $this->adafruitIO->getFeed("CPP_LED0");
-        echo $led0->get();
-    }
-
-    function getInfraredData()
-    {
-        $infrared_leds =  $this->sensorModel->get_infrared_leds();
-        foreach ($infrared_leds as $key => $value) {
-            // echo "Key: ".$key.'-';
-            // echo "Value: ". $value['sensor_id'].$value['led_id'];
-            $command = new GetInfraredDataCommand($value['sensor_id']);
-            $this->remote->setCommand($command);
-            echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
+        $infrared_sensors =  $this->sensorModel->get_infrared_sensors();
+        foreach ($infrared_sensors as $key => $value) {
+            $led = $this->ledModel->get_led($value['led_id']);
+            if ($led['mode'] == 'Auto') {
+                $command = new GetInfraredDataCommand($value['sensor_id']);
+                $this->remote->setCommand($command);
+                echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
+            }
         }
-        // $command = new GetInfraredDataCommand(0);
-        // $this->remote->setCommand($command);
-        // echo $this->remote->run();
+
+        // $sound_sensors =  $this->sensorModel->get_sound_sensors();
+        // foreach ($sound_sensors as $key => $value) {
+        //     $led = $this->ledModel->get_led($value['led_id']);  
+        //     // if ($led['mode'] == 'Sound') {
+        //     if ($led['mode'] != 'Auto') {
+        //         $command = new GetInfraredDataCommand($value['sensor_id']);
+        //         $this->remote->setCommand($command);
+        //         echo $value['led_id'] . ' ' . $this->remote->run() . ' ';
+        //     }
+        // }
     }
 }
