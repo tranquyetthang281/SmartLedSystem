@@ -26,9 +26,8 @@ $DOMAIN = 'http://localhost/SmartLedSystem/SourceMVC/client/';
 <body>
     <div class="container">
         <div class="phone-screen" style="background-image: url('<?php echo $DOMAIN ?>public/image/pngwing.com.png')">
-
             <?php
-            if (false)
+            if (!isset($_SESSION['token_user']))
                 require_once('login.php');
             else { ?>
                 <?php
@@ -49,12 +48,12 @@ $DOMAIN = 'http://localhost/SmartLedSystem/SourceMVC/client/';
                             </a>
                         </div>
                         <div class="nofi-icon icon-footer">
-                            <a href="<?php echo $DOMAIN ?>Home/RenderPage/Statistics">
+                            <a href="<?php echo $DOMAIN ?>Statistics/Show">
                                 <ion-icon name="podium-outline" title=""></ion-icon>
                             </a>
                         </div>
                         <div class="user-icon icon-footer">
-                            <a href="<?php echo $DOMAIN ?>Home/RenderPage/Account">
+                            <a href="<?php echo $DOMAIN ?>Account/Show">
                                 <ion-icon name="person-outline"></ion-icon>
                             </a>
                         </div>

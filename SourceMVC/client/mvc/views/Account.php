@@ -1,3 +1,6 @@
+<?php
+$DOMAIN = 'http://localhost/SmartLedSystem/SourceMVC/client/';
+?>
 <div class="body">
     <div>
         <ion-icon name="person-circle-outline" class="account-icon"> </ion-icon>
@@ -10,7 +13,7 @@
                     <b>Name:</b>
                 </div>
                 <div class="col-9">
-                    <p>Nguyen Danh Tien Dung</p>
+                    <p><?php echo $data['userInfo']['name'] ?></p>
                 </div>
             </div>
         </li>
@@ -20,7 +23,7 @@
                     <b>Sex:</b>
                 </div>
                 <div class="col-9">
-                    <p>Nam</p>
+                    <p><?php echo $data['userInfo']['sex'] == 'M' ? 'Nam' : 'Nữ' ?></p>
                 </div>
             </div>
         </li>
@@ -30,7 +33,7 @@
                     <b>User:</b>
                 </div>
                 <div class="col-9">
-                    <p>tiendung</p>
+                    <p><?php echo $data['userInfo']['username'] ?></p>
                 </div>
             </div>
         </li>
@@ -40,18 +43,15 @@
                     <b>ID:</b>
                 </div>
                 <div class="col-9">
-                    <p>1912955</p>
+                    <p> <?php echo $data['userInfo']['id'] ?> </p>
                 </div>
             </div>
         </li>
     </ol>
     <div class="logout-btn-div">
-        <button class="custom-btn btn-out" onclick="alertOut()"><span>Logout</span></button>
+        <button class="custom-btn btn-out"><span>
+                <a href="<?php echo $DOMAIN . 'Login/Logout' ?>"> Logout</a>
+            </span></button>
     </div>
 
-    <script>
-        function alertOut() {
-            confirm("Are you sure?");
-        }
-    </script>
 </div>

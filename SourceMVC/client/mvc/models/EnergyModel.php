@@ -12,7 +12,7 @@ class EnergyModel extends Database
     {
         // $used_time (hours)
         date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $time =  date("Y-m");
+        $time =  date("Y-m-d");
         $used_energy = $this->checkUsed($ledId, $time);
         if ($used_energy != 'None') {
             $energy = (float)$used_energy['energy'] + $energy;
@@ -30,5 +30,15 @@ class EnergyModel extends Database
     {
         $sql = "UPDATE used_energy SET energy = {$energy} WHERE led_id = {$ledId} AND time = '{$time}'";
         return $this->query($sql);
+    }
+    function getAllMonthYear()
+    {
+        $sql = "SELECT DISTINCT month(time) AS month, year(time) as year FROM used_energy";
+        return $this->get_list($sql);
+    }
+    function getEnergy($time1, $time2, $ledId)
+    {
+        $sql = "SELECT SUM(energy) as energy FROM used_energy WHERE led_id = {$ledId} AND time BETWEEN '{$time1}' AND '$time2' ";
+        return $this->get_one($sql);
     }
 }

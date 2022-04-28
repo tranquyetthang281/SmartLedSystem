@@ -1,8 +1,8 @@
+
 <div class="body">
     <div class="statistic-title">Statistics</div>
     <div class="selectpicker led-char">
-        <select id="slc-led">
-            <option value="leds">Tất cả thiết bị</option>
+        <select id="slc-led" onchange="changeStatistics()">
             <?php
             foreach ($data['leds'] as $key => $value) { ?>
                 <option value="led<?php echo $value['id'] ?>">Thiết bị đèn số <?php echo $key + 1 ?></option>
@@ -12,10 +12,15 @@
         </select>
     </div>
     <div class="time-char">
-        <select id="slc-time">
+        <select id="slc-time" onchange="changeStatistics()">
             <?php
-            for ($i = 1; $i <= 3; ++$i) {
-                echo "<option class=\"option-color\">0$i/2022</option>";
+            $currentM = date('m');
+            $currentY = date('y');
+            foreach ($data['time'] as $key => $value) {
+                if ((int)$value['year'] != (int)$currentY && (int)$value['month'] != (int)$currentM) {
+            ?>
+                    <option value="<?php echo $value['year'] . '-' . $value['month'] ?>"><?php echo $value['month'] . "/" . $value['year'] ?></option>
+            <?php }
             }
             ?>
         </select>
