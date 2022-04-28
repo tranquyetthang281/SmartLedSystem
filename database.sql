@@ -32,7 +32,7 @@ drop table if exists used_energy;
 create table used_energy(
     id int not null auto_increment,
     led_id int not null,
-    enrgy decimal(12,2),
+    energy decimal(10,4),
     time datetime,
     primary key(id, led_id)
 );

@@ -78,12 +78,12 @@ class Home extends Controller
     {
         if (isset($_POST['l'])) {
             $l1 = explode(' ', $_POST['l']);
-            for ($i = 0; $i < sizeof($l1); $i+=2) {
+            for ($i = 0; $i < sizeof($l1); $i += 2) {
                 $ledId = (int)$l1[$i];
                 if ((int)($l1[$i + 1]) > 50) {
-
                     $ledStatus = '1';
-                } else $ledStatus = '0';
+                } 
+                else $ledStatus = '0';
                 if ($ledStatus)
                     $command = new TurnOnLedCommand($ledId);
                 else

@@ -119,12 +119,12 @@ $(document).ready(function () {
                     url: DOMAIN + 'Home/ChangeStatus2',
                     type: 'post',
                     data: {
-                        l: result
+                        l: result,
                     },
                     success: function (result) {
                         console.log(result);
                         if (result != 'Failed') {
-                            updateStatus();
+                            
                         } else {
                             console.log('failed');
                         }
