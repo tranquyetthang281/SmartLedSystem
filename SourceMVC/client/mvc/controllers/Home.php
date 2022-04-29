@@ -1,7 +1,7 @@
 <?php
 
-$INFRARED_MIN = 50;
-$SOUND_MIN = 200;
+// $INFRARED_MIN = 50;
+// $SOUND_MIN = 200;
 
 class Home extends Controller
 {
@@ -37,7 +37,7 @@ class Home extends Controller
     {
         if (isset($_POST['ledId']) && isset($_POST['ledMode'])) {
             $ledId = (int)$_POST['ledId'];
-            $ledMode = $_POST['ledMode'] == 'Auto' ? 'Voice' : 'Auto';
+            $ledMode = $_POST['ledMode'] == 'Auto' ? 'Sound' : 'Auto';
             if ($this->ledModel->update_mode($ledId, $ledMode))
                 echo $ledMode;
             else echo 'Failed';
@@ -73,8 +73,6 @@ class Home extends Controller
     
     function ChangeStatusBySensor()
     {
-        global $INFRARED_MIN;
-        global $SOUND_MIN;
         if (isset($_POST['l'])) {
             $l1 = explode(' ', $_POST['l']);
             $flag = '0';
@@ -83,11 +81,11 @@ class Home extends Controller
                 $led = $this->ledModel->get_led($ledId);
                 // echo '*' . $led['status'];
                 if ($led['mode'] == 'Auto') {
-                    if ((int)($l1[$i + 1]) > $INFRARED_MIN) {
+                    if ((int)($l1[$i + 1]) > 50) {
                         $newLedStatus = '1';
                     } else $newLedStatus = '0';
                 } else {
-                    if ((int)($l1[$i + 1]) > $SOUND_MIN) {
+                    if ((int)($l1[$i + 1]) > 200) {
                         $newLedStatus = $led['status'] == '1' ? '0' : '1';
                     } else continue;
                 }
