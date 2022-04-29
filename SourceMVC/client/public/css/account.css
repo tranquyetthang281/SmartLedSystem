@@ -125,3 +125,10 @@
 .btn-out span:hover:after {
     width: 100%;
 }
+.btn-out span a {
+    color: white;
+    text-decoration: none;
+}
+.btn-out a:hover {
+    color: rgba(2, 126, 251, 1);
+}

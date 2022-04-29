@@ -6,11 +6,12 @@
     </div>
     <div class="login-input">
         <div>
-            <input type="text" placeholder="Username" class="username form-control" />
+            <input type="text" placeholder="Username" class="username username-input form-control" />
         </div>
         <div>
-            <input type="password" placeholder="Password" class="password form-control" />
+            <input type="password" placeholder="Password" class="password password-input form-control" />
         </div>
         <div class="login-button btn btn-primary">Login</div>
+        <div class="text-danger err mt-4"></div>
     </div>
 </div>
