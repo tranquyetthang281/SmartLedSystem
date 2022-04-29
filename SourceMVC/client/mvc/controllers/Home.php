@@ -38,9 +38,15 @@ class Home extends Controller
         if (isset($_POST['ledId']) && isset($_POST['ledMode'])) {
             $ledId = (int)$_POST['ledId'];
             $ledMode = $_POST['ledMode'] == 'Auto' ? 'Sound' : 'Auto';
-            if ($this->ledModel->update_mode($ledId, $ledMode))
+            if ($this->ledModel->update_mode($ledId, $ledMode)) {
                 echo $ledMode;
-            else echo 'Failed';
+                if ($ledMode == "Auto")
+                    $command = new SendAutoModeCommand($ledId);
+                else
+                    $command = new SendSoundModeCommand($ledId);
+                $this->remote->setCommand($command);
+                $this->remote->run();
+            } else echo 'Failed';
         } else echo 'Failed';
     }
 
@@ -51,9 +57,9 @@ class Home extends Controller
             $ledId = (int)$_POST['ledId'];
             $newLedStatus = $_POST['ledStatus'] == 0 ? '1' : '0';
             if ($newLedStatus)
-            $command = new TurnOnLedCommand($ledId);
+                $command = new TurnOnLedCommand($ledId);
             else
-            $command = new TurnOffLedCommand($ledId);
+                $command = new TurnOffLedCommand($ledId);
             $this->remote->setCommand($command);
             $this->remote->run();
             //$led0->send($newLedStatus);
@@ -70,7 +76,7 @@ class Home extends Controller
             }
         } else echo 'Failed';
     }
-    
+
     function ChangeStatusBySensor()
     {
         if (isset($_POST['l'])) {
@@ -152,7 +158,7 @@ class Home extends Controller
 
         $sound_sensors =  $this->sensorModel->get_sound_sensors();
         foreach ($sound_sensors as $key => $value) {
-            $led = $this->ledModel->get_led($value['led_id']);  
+            $led = $this->ledModel->get_led($value['led_id']);
             // if ($led['mode'] == 'Sound') {
             if ($led['mode'] != 'Auto') {
                 $command = new GetSoundDataCommand($value['sensor_id']);

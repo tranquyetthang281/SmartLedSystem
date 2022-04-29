@@ -30,4 +30,8 @@ require_once "./mvc/core/CMP/GetInfraredDataCommand.php";
 
 require_once "./mvc/core/CMP/GetSoundDataCommand.php";
 
+require_once "./mvc/core/CMP/SendAutoModeCommand.php";
+
+require_once "./mvc/core/CMP/SendSoundModeCommand.php";
+
 ?>
